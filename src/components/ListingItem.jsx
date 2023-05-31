@@ -1,15 +1,19 @@
 import {Link} from 'react-router-dom'
 import {ReactComponent as DeleteIcon} from '../assets/svg/deleteIcon.svg'
+import {ReactComponent as EditIcon} from '../assets/svg/editIcon.svg'
 import bedIcon from '../assets/svg/bedIcon.svg'
 import bathtubIcon from '../assets/svg/bathtubIcon.svg'
 
-function ListingItem({listing, id, onDelete}) {
+function ListingItem({listing, id, onEdit, onDelete}) {
   return (
     <li className='categoryListing'>
-        <Link to={`/category/${listing.type}/${id}`}
-        className='categoryListingLink'>
-            <img src={listing.imgUrls[1]} alt={listing.name} 
+        <Link 
+            to={`/category/${listing.type}/${id}`}
+            className='categoryListingLink'
+        >
+            <img src={listing.imgUrls[0]} alt={listing.name} 
             className='categoryListingImg'/>
+
             <div className='categoryListingDetails'>
                 <p className='categoryListingLocation'>{listing.location}</p>
                 <p className='categoryListingName'>{listing.name}</p>
@@ -38,8 +42,17 @@ function ListingItem({listing, id, onDelete}) {
 
             </div>
         </Link>
+        {onEdit && (
+            <EditIcon 
+                className='editIcon' 
+                fill='rgb(231, 76, 60)' 
+                onClick={() => onEdit(id)}/>
+        )}
         {onDelete && (
-            <DeleteIcon className='removeIcon' fill='rgb(231, 76, 60)' onClick={onDelete(listing.id, listing.name)}/>
+            <DeleteIcon 
+                className='removeIcon' 
+                fill='rgb(231, 76, 60)' 
+                onClick={() => onDelete(listing.id, listing.name)}/>
         )}
     </li>
   )
